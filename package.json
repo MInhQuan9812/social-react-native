@@ -10,11 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/viewpager": "^5.0.11",
     "axios": "^0.27.2",
     "react": "18.0.0",
     "react-native": "0.69.4",
     "react-native-elements": "^3.4.2",
     "react-native-linear-gradient": "^2.6.2",
+    "react-native-pager-view": "^5.4.25",
+    "react-native-swiper": "^1.6.0-nightly.5",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {

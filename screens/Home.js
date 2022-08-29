@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react';
 import Header from './components/Home/Header';
 import Stories from './components/Home/Stories';
 import Feed from './components/Home/Feed';
-import axios from 'axios';
 import BottomTabs from './components/Home/BottomTab';
+// import getFeed from './../service/Feed/getFeed'
+import axios from 'axios';
 
 const getFeedToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJpZCI6IjIiLCJ1c2VyTmFtZSI6ImJpdHJhbSIsIm5iZiI6MTY1OTExNTA0MCwiZXhwIjoxNjYxNzA3MDQwLCJpYXQiOjE2NTkxMTUwNDB9.I6TE8O9WHWJOzc97X8Z43M_Yjd4-0ghOFqrRQsrIdps';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJpZCI6IjEyIiwidXNlck5hbWUiOiIxMi4xOF94b3giLCJuYmYiOjE2NjE3NDAzNTgsImV4cCI6MTY2NDMzMjM1OCwiaWF0IjoxNjYxNzQwMzU4fQ.hjAfWbc1QJpJrUN9B0yVyKDJoJQe_-NwQ1yQAAqvHBg';
+
 export default function Home() {
   const [feedData, setFeedData] = useState([]);
   const getFeedData = () => {
@@ -33,13 +35,15 @@ export default function Home() {
       <View style={styles.header}>
         <Header />
       </View>
-      <View style={styles.stories}>
-        <Stories />
-      </View>
-      <ScrollView style={styles.feed}>
-        <Feed feedData={feedData} />
+      <ScrollView>
+        <View style={styles.stories}>
+          <Stories />
+        </View>
+        <View style={styles.feed}>
+          <Feed feedData={feedData} />
+        </View>
       </ScrollView>
-      <BottomTabs/>
+      <BottomTabs />
     </SafeAreaView>
   );
 }
