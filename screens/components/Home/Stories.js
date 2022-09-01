@@ -1,8 +1,44 @@
-import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Image,
+  FlatList,
+} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
+export default function Stories() {
+  return (
+    <FlatList
+      nestedScrollEnabled={false}
+      showsHorizontalScrollIndicator={false}
+      horizontal
+      data={USER}
+      renderItem={_renderItem}
+    />
+  );
+}
+
+const _renderItem = ({item}) => (
+  <View style={styles.wrapper}>
+    <View style={styles.wrapper_Image}>
+      <Image source={item.image} style={styles.image} />
+    </View>
+    <Text style={styles.nickName}>
+      {item.name.length > 10
+        ? item.name.slice(0, 9) + '...'
+        : item.name.toLowerCase()}
+    </Text>
+  </View>
+);
+
 const USER = [
+  {
+    image: require('../../../assets/Images/UserImage.png'),
+    name: 'Tin của bạn',
+  },
   {
     image: require('../../../assets/Images/2.jpg'),
     name: 'nevskaya_95',
@@ -28,30 +64,10 @@ const USER = [
     name: 'Phương Ly',
   },
 ];
-
-export default function Stories() {
-  return (
-    <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {USER.map((item, index) => (
-          <View key={index} style={styles.wrapper}>
-            <View style={styles.wrapper_Image}>
-              <Image source={item.image} style={styles.image} />
-            </View>
-            <Text style={styles.nickName}>
-              {item.name.length > 10
-                ? item.name.slice(0, 9).toLowerCase() + '...'
-                : item.name.toLowerCase()}
-            </Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
-  );
-}
 const styles = StyleSheet.create({
   container: {
     marginTop: 4,
+    backgroundColor: 'red',
   },
   wrapper: {
     margin: 3,

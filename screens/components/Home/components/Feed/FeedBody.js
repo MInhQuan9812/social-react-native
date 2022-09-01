@@ -1,37 +1,80 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
-import React from 'react';
-// import PagerView from 'react-native-pager-view';
-import ViewPager from '@react-native-community/viewpager';
-import Swiper from 'react-native-swiper';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
+import React, {useState} from 'react';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 export default function FeedBody(props) {
+  const [imgSwipper, setImgSwipper] = useState(0);
+
+  onChange = action => {
+    if (action) {
+      const slide = Math.ceil(
+        action.contentOffset.x / action.layoutMeasurement.width,
+      );
+      if (slide != imgSwipper) {
+        setImgSwipper(slide);
+      }
+    }
+  };
+
   return (
     <View style={styles.body_Container}>
       <Text style={styles.caption}>{props.caption}</Text>
-      <Swiper
-        loadMinimal
-        loadMinimalSize={1}
-        loop={false}
-        style={styles.wrapper}
-        horizontal={true}
-        showsButtons>
+      <View style={styles.wrapper}>
+        <ScrollView
+          nestedScrollEnabled={false}
+          onScroll={({action}) => onChange(action)}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}>
+          {props.image.map((item, index) => (
+            <View key={index} style={styles.wrapper_Image}>
+              <Image
+                key={index}
+                style={{width: '100%', height: 450}}
+                source={{uri: item.url}}
+              />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+
+      <View style={styles.wrapperDot}>
         {props.image.map((item, index) => (
-          <View key={index} style={styles.wrapper_Image}>
-            <Image style={styles.image} source={{uri: item.url}} />
-          </View>
+          <Text
+            key={index}
+            style={imgSwipper == index ? styles.activeDot : styles.classicDot}>
+            ●
+          </Text>
         ))}
-      </Swiper>
+      </View>
     </View>
   );
 }
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 15,
   },
-  wrapper_Image: {
-    width: '100%',
-    backgroundColor: 'grey',
+  wrapper: {
     flex: 1,
+    width: '100%',
+    height: 450,
+  },
+  wrapper_Image: {
+    width: WIDTH,
   },
   image: {
     height: '100%',
@@ -43,9 +86,19 @@ const styles = StyleSheet.create({
     color: '#000000',
     margin: 5,
   },
-  wrapper: {
-    flex: 1,
-    width: '100%',
-    height:450,
+  wrapperDot: {
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+  },
+  activeDot: {
+    margin: 3,
+    color: '#1E90FF',
+  },
+  classicDot: {
+    margin: 3,
+    color: '#A9A9A9',
   },
 });

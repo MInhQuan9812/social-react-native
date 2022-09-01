@@ -5,25 +5,19 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ScrollView,
+  StyleSheet,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Divider} from 'react-native-elements';
 
 export default function BottomTabs(props) {
   const [onclick, setOnClick] = useState('home');
   return (
-    <View
-      style={{
-        margin: 10,
-        marginHorizontal: 30,
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
+    <View>
+      <Divider width={1} orientation="vertical" />
+      <View style={styles.wrapper}>
         {IconMenu.map((item, index) => (
-          <View key={index} style={{alignItems: 'center'}}>
+          <View key={index}>
             <Icon {...item} onclick={onclick} setOnClick={setOnClick} />
           </View>
         ))}
@@ -68,3 +62,13 @@ const IconMenu = [
     name2: 'people-circle-sharp',
   },
 ];
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 10,
+    marginHorizontal: 30,
+  },
+});

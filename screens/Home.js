@@ -9,7 +9,6 @@ import axios from 'axios';
 
 const getFeedToken =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJpZCI6IjEyIiwidXNlck5hbWUiOiIxMi4xOF94b3giLCJuYmYiOjE2NjE3NDAzNTgsImV4cCI6MTY2NDMzMjM1OCwiaWF0IjoxNjYxNzQwMzU4fQ.hjAfWbc1QJpJrUN9B0yVyKDJoJQe_-NwQ1yQAAqvHBg';
-
 export default function Home() {
   const [feedData, setFeedData] = useState([]);
   const getFeedData = () => {
@@ -21,8 +20,7 @@ export default function Home() {
       .then(res => setFeedData(res.data.result))
       .catch(function (error) {
         console.log(
-          'There has been a problem with your fetch operation: ' +
-            error.message,
+          'There has been a problem with your operation: ' + error.message,
         );
         throw error;
       });
@@ -35,7 +33,9 @@ export default function Home() {
       <View style={styles.header}>
         <Header />
       </View>
-      <ScrollView>
+
+      <ScrollView         nestedScrollEnabled={false}
+>
         <View style={styles.stories}>
           <Stories />
         </View>
@@ -43,7 +43,10 @@ export default function Home() {
           <Feed feedData={feedData} />
         </View>
       </ScrollView>
-      <BottomTabs />
+
+      <View>
+        <BottomTabs />
+      </View>
     </SafeAreaView>
   );
 }
@@ -61,8 +64,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  stories: {},
+  stories: {
+    // backgroundColor:'yellow'
+  },
   feed: {
     marginTop: 3,
+    // backgroundColor:'yellow'
   },
 });

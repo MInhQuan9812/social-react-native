@@ -8,11 +8,20 @@ export default function FeedFooter(props) {
       <View style={styles.wrapper_header}>
         <View style={styles.wrapper_IconsLeft}>
           {Icon.map((item, index) => (
-              <Ionicons style={styles.iconsLeft} key={index} size={30} name={item.name1} />
+            <Ionicons
+              style={styles.iconsLeft}
+              key={index}
+              size={30}
+              name={item.name1}
+            />
           ))}
         </View>
         <View style={styles.wrapper_Iconsright}>
-          <Ionicons style={styles.iconsRight} size={30} name="bookmark-outline" />
+          <Ionicons
+            style={styles.iconsRight}
+            size={30}
+            name="bookmark-outline"
+          />
         </View>
       </View>
     </View>
@@ -31,16 +40,14 @@ const styles = StyleSheet.create({
   wrapper_IconsLeft: {
     flexDirection: 'row',
   },
-  iconsLeft:{
-    marginRight:15,
-    color:"#000000"
+  iconsLeft: {
+    marginRight: 15,
+    color: '#000000',
   },
-  wrapper_Iconsright: {   
-  },
+  wrapper_Iconsright: {},
   iconsRight: {
-    color:"#000000"
-
-  }
+    color: '#000000',
+  },
 });
 
 const Icon = [
