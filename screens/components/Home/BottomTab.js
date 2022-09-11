@@ -8,13 +8,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {Divider} from 'react-native-elements';
+import {Divider} from '@rneui/themed';
 
 export default function BottomTabs(props) {
   const [onclick, setOnClick] = useState('home');
   return (
     <View>
-      <Divider width={1} orientation="vertical" />
+      <Divider width={1} orientation="vertical"/>
       <View style={styles.wrapper}>
         {IconMenu.map((item, index) => (
           <View key={index}>

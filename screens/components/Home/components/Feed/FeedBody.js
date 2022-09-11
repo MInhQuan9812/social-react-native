@@ -26,27 +26,58 @@ export default function FeedBody(props) {
     }
   };
 
+  // const obj = JSON.parse(props.feedStyle);
+  // console.log(obj.subLayout);
+  // getStyleFeed = function (item) {
+  //   if (item.subLayout === 'square') {
+  //     return {
+  //       width: WIDTH,
+  //       height: WIDTH * 1,
+  //     };
+  //   } else if (item.subLayout === 'portrait') {
+  //     return {
+  //       width: WIDTH,
+  //       height: WIDTH * 1.25,
+  //     };
+  //   } else if (item.subLayout === 'landscape') {
+  //     return {
+  //       width: WIDTH,
+  //       height: WIDTH * 0.25,
+  //     };
+  //   }
+  // };
+  {
+    /* {props.style.map((item, index) => (
+          // <WrapperImage
+          //   key={index}
+          //   varibles={item.subLayout}
+          //   image={props.image}
+          // />
+        ))} */
+  }
+
+  // (Android & Ios (Instagram))
+  //Portrait: height = width x 1.25;
+  //LandScape: height = width x 0.52;
+  //Square: height = width x 1;
+  // Unidentified: height = width x 0.6;
+
   return (
     <View style={styles.body_Container}>
       <Text style={styles.caption}>{props.caption}</Text>
-      <View style={styles.wrapper}>
-        <ScrollView
-          nestedScrollEnabled={false}
-          onScroll={({action}) => onChange(action)}
-          pagingEnabled
-          horizontal
-          showsHorizontalScrollIndicator={false}>
-          {props.image.map((item, index) => (
-            <View key={index} style={styles.wrapper_Image}>
-              <Image
-                key={index}
-                style={{width: '100%', height: 450}}
-                source={{uri: item.url}}
-              />
-            </View>
-          ))}
-        </ScrollView>
-      </View>
+      <ScrollView
+        nestedScrollEnabled={false}
+        style={styles.wrapper}
+        onScroll={({action}) => onChange(action)}
+        pagingEnabled
+        horizontal
+        showsHorizontalScrollIndicator={false}>
+        {props.image.map((item, index) => (
+          <View key={index} style={styles.wrapper_Image}>
+            <Image style={styles.image} source={{uri: item.url}} />
+          </View>
+        ))}
+      </ScrollView>
 
       <View style={styles.wrapperDot}>
         {props.image.map((item, index) => (
@@ -61,24 +92,19 @@ export default function FeedBody(props) {
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 15,
   },
   wrapper: {
     flex: 1,
-    width: '100%',
-    height: 450,
   },
   wrapper_Image: {
     width: WIDTH,
+    height: WIDTH * 1,
   },
   image: {
     height: '100%',
-    resizeMod: 'cover',
   },
   caption: {
     fontSize: 16,

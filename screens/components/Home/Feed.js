@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, FlatList, VirtualizedList} from 'react-native';
 import React from 'react';
-import {Divider} from 'react-native-elements';
+import {Divider} from '@rneui/themed';
 import FeedHeader from './components/Feed/FeedHeader';
 import FeedBody from './components/Feed/FeedBody';
 import FeedFooter from './components/Feed/FeedFooter';

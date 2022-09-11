@@ -1,4 +1,11 @@
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import Header from './components/Home/Header';
 import Stories from './components/Home/Stories';
@@ -7,26 +14,40 @@ import BottomTabs from './components/Home/BottomTab';
 // import getFeed from './../service/Feed/getFeed'
 import axios from 'axios';
 
-const getFeedToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJpZCI6IjEyIiwidXNlck5hbWUiOiIxMi4xOF94b3giLCJuYmYiOjE2NjE3NDAzNTgsImV4cCI6MTY2NDMzMjM1OCwiaWF0IjoxNjYxNzQwMzU4fQ.hjAfWbc1QJpJrUN9B0yVyKDJoJQe_-NwQ1yQAAqvHBg';
 export default function Home() {
   const [feedData, setFeedData] = useState([]);
-  const getFeedData = () => {
-    axios('https://www.pgonevn.com/api//Feed/GetAll', {
+
+  const authTokenFromDevice = async () => {
+    return await AsyncStorage.getItem('Instagram-AuthToken');
+  };
+
+  const getFeedData = async () => {
+
+    // Khi vô Home rồi lấy token dưới bộ nhớ máy đã lưu từ trước lên kèm vô Header
+    // `authTokenFromDevice()`
+
+
+    // Những màn hình khác tương tự Home
+  
+
+    return axios('https://www.pgonevn.com/api/Feed/GetAll', {
       headers: {
-        Authorization: `Bearer ${getFeedToken}`,
+        Authorization: `Bearer ${await authTokenFromDevice()}`,
       },
-    })
-      .then(res => setFeedData(res.data.result))
+    });
+  };
+
+  useEffect(() => {
+    getFeedData()
+      .then(res => {
+        setFeedData(res.data.result);
+      })
       .catch(function (error) {
         console.log(
           'There has been a problem with your operation: ' + error.message,
         );
         throw error;
       });
-  };
-  useEffect(() => {
-    getFeedData();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -34,8 +55,7 @@ export default function Home() {
         <Header />
       </View>
 
-      <ScrollView         nestedScrollEnabled={false}
->
+      <ScrollView nestedScrollEnabled={false}>
         <View style={styles.stories}>
           <Stories />
         </View>
@@ -65,10 +85,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   stories: {
-    // backgroundColor:'yellow'
   },
   feed: {
     marginTop: 3,
-    // backgroundColor:'yellow'
   },
 });
