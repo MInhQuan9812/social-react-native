@@ -1,35 +1,21 @@
-import {
-  View,
-
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState} from 'react';
 import Header from './components/Home/Header';
 import Stories from './components/Home/Stories';
 import Feed from './components/Home/Feed';
 import BottomTabs from './components/Home/BottomTab';
-// import getFeed from './../service/Feed/getFeed'
 import axios from 'axios';
 
-export default function Home() {
+export default function Home({navigation}) {
   const [feedData, setFeedData] = useState([]);
-
+      // Khi vô Home rồi lấy token dưới bộ nhớ máy đã lưu từ trước lên kèm vô Header
+    // `authTokenFromDevice()`
+    // Những màn hình khác tương tự Home
   const authTokenFromDevice = async () => {
     return await AsyncStorage.getItem('Instagram-AuthToken');
   };
-
   const getFeedData = async () => {
-
-    // Khi vô Home rồi lấy token dưới bộ nhớ máy đã lưu từ trước lên kèm vô Header
-    // `authTokenFromDevice()`
-
-
-    // Những màn hình khác tương tự Home
-  
-
     return axios('https://www.pgonevn.com/api/Feed/GetAll', {
       headers: {
         Authorization: `Bearer ${await authTokenFromDevice()}`,
@@ -50,12 +36,11 @@ export default function Home() {
       });
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
+    <View>
       <View style={styles.header}>
         <Header />
       </View>
-
-      <ScrollView nestedScrollEnabled={false}>
+      <ScrollView>
         <View style={styles.stories}>
           <Stories />
         </View>
@@ -63,11 +48,11 @@ export default function Home() {
           <Feed feedData={feedData} />
         </View>
       </ScrollView>
-
-      <View>
-        <BottomTabs />
-      </View>
-    </SafeAreaView>
+      {/* Configure BottomTabView in navigation class.
+       <View>
+        <BottomTabs navigation={navigation} />
+      </View>  */}
+    </View>
   );
 }
 
@@ -84,8 +69,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  stories: {
-  },
+  stories: {},
   feed: {
     marginTop: 3,
   },

@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'Poppins-Regular',
     fontWeight: '300',
+    color:'black'
   },
 });

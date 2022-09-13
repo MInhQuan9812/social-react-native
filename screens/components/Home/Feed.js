@@ -19,11 +19,13 @@ const _renderItem = ({item}) => (
   <View style={styles.container}>
     <Divider width={1} orientation="vertical" />
     <FeedHeader avatar={item.creator.avatar} nickName={item.creator.userName} />
-    <FeedBody caption={item.caption} image={item.medias} />
-    <FeedFooter nickName={item.creator.userName} caption={item.caption} />
+    <FeedBody image={item.medias} />
+    <FeedFooter createTimer={item.medias.createAt} nickName={item.creator.userName} caption={item.caption} />
   </View>
 );
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex:1,
+  },
 });

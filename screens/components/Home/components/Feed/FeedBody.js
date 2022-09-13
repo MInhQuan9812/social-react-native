@@ -13,88 +13,52 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 export default function FeedBody(props) {
-  const [imgSwipper, setImgSwipper] = useState(0);
-
-  onChange = action => {
-    if (action) {
+  const [imgActive, setImgActive] = useState(0);
+  const onChange = nativeEvent => {
+    if (nativeEvent) {
       const slide = Math.ceil(
-        action.contentOffset.x / action.layoutMeasurement.width,
+        nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width,
       );
-      if (slide != imgSwipper) {
-        setImgSwipper(slide);
+      if (slide != imgActive) {
+        setImgActive(slide);
       }
     }
   };
-
-  // const obj = JSON.parse(props.feedStyle);
-  // console.log(obj.subLayout);
-  // getStyleFeed = function (item) {
-  //   if (item.subLayout === 'square') {
-  //     return {
-  //       width: WIDTH,
-  //       height: WIDTH * 1,
-  //     };
-  //   } else if (item.subLayout === 'portrait') {
-  //     return {
-  //       width: WIDTH,
-  //       height: WIDTH * 1.25,
-  //     };
-  //   } else if (item.subLayout === 'landscape') {
-  //     return {
-  //       width: WIDTH,
-  //       height: WIDTH * 0.25,
-  //     };
-  //   }
-  // };
-  {
-    /* {props.style.map((item, index) => (
-          // <WrapperImage
-          //   key={index}
-          //   varibles={item.subLayout}
-          //   image={props.image}
-          // />
-        ))} */
-  }
-
-  // (Android & Ios (Instagram))
-  //Portrait: height = width x 1.25;
-  //LandScape: height = width x 0.52;
-  //Square: height = width x 1;
-  // Unidentified: height = width x 0.6;
-
   return (
     <View style={styles.body_Container}>
-      <Text style={styles.caption}>{props.caption}</Text>
       <ScrollView
-        nestedScrollEnabled={false}
         style={styles.wrapper}
-        onScroll={({action}) => onChange(action)}
+        onScroll={({nativeEvent}) => {
+          onChange(nativeEvent);
+        }}
         pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}>
         {props.image.map((item, index) => (
-          <View key={index} style={styles.wrapper_Image}>
-            <Image style={styles.image} source={{uri: item.url}} />
+          <View style={styles.wrapper_Image}>
+            <Image key={index} style={styles.image} source={{uri: item.url}} />
           </View>
         ))}
       </ScrollView>
 
-      <View style={styles.wrapperDot}>
-        {props.image.map((item, index) => (
-          <Text
-            key={index}
-            style={imgSwipper == index ? styles.activeDot : styles.classicDot}>
-            ●
-          </Text>
-        ))}
-      </View>
+      {props.image.length !== 1 ? (
+        <View style={styles.wrapperDot}>
+          {props.image.map((e, index) => (
+            <Text
+              key={index}
+              style={imgActive == index ? styles.activeDot : styles.classicDot}>
+              ●
+            </Text>
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 15,
+  body_Container: {
+    flex: 1,
   },
   wrapper: {
     flex: 1,
@@ -114,10 +78,10 @@ const styles = StyleSheet.create({
   },
   wrapperDot: {
     position: 'absolute',
-    bottom: 0,
+    bottom: -40,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    marginLeft: WIDTH / 2,
   },
   activeDot: {
     margin: 3,
@@ -128,3 +92,39 @@ const styles = StyleSheet.create({
     color: '#A9A9A9',
   },
 });
+
+// const obj = JSON.parse(props.feedStyle);
+// console.log(obj.subLayout);
+// getStyleFeed = function (item) {
+//   if (item.subLayout === 'square') {
+//     return {
+//       width: WIDTH,
+//       height: WIDTH * 1,
+//     };
+//   } else if (item.subLayout === 'portrait') {
+//     return {
+//       width: WIDTH,
+//       height: WIDTH * 1.25,
+//     };
+//   } else if (item.subLayout === 'landscape') {
+//     return {
+//       width: WIDTH,
+//       height: WIDTH * 0.25,
+//     };
+//   }
+// };
+{
+  /* {props.style.map((item, index) => (
+          // <WrapperImage
+          //   key={index}
+          //   varibles={item.subLayout}
+          //   image={props.image}
+          // />
+        ))} */
+}
+
+// (Android & Ios (Instagram))
+//Portrait: height = width x 1.25;
+//LandScape: height = width x 0.52;
+//Square: height = width x 1;
+// Unidentified: height = width x 0.6;

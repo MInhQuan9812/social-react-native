@@ -46,7 +46,7 @@ export default function Login({navigation}) {
       );
       const token = await res.data.result.token;
       await AsyncStorage.setItem('Instagram-AuthToken',token)
-      navigation.navigate('Home')
+      navigation.navigate('BottomTabView')
     } catch (error) {
       Alert.alert('Sai tài khoản, mật khẩu',error.message + '\n\n... What would you like to do next??', [
         {
@@ -64,9 +64,7 @@ export default function Login({navigation}) {
     // Sau khi có token từ server, lưu token xuống bộ nhớ máy
     // Dùng `AsyncStorage.setItem('Instagram-AuthToken', token)`
     // Đặt key là `Instagram-AuthToken`
-
     //   AsyncStorage.setItem('Instagram-AuthToken', token);
-
     //   // Sau đó navigate đến Home
     //   navigation.navigate('Home');
     // })

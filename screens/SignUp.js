@@ -10,6 +10,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import LinkToLogin from './components/Sign Up/LinkToLogin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -34,8 +35,9 @@ export default function SignUp({navigation}) {
           password: `${password}`,
         },
       );
-      const token=await res.data.result.token;
-      console.log(token)
+      const token = await res.data.result.token;
+      await AsyncStorage.setItem('Instagram-AuthToken', token);
+      navigation.navigate('BottomTabView');
     } catch (error) {
       Alert.alert(error.message);
     }
@@ -61,8 +63,7 @@ export default function SignUp({navigation}) {
               values.username,
               values.password,
             );
-          }
-          }
+          }}
           validationSchema={SignUpFormSchema}
           validateOnMount={true}>
           {({handleSubmit, handleBlur, handleChange, values, isValid}) => (
@@ -95,7 +96,7 @@ export default function SignUp({navigation}) {
                 disabled={!isValid}
                 isValid={isValid}
               />
-              <LinkToLogin navigation={navigation}/>
+              <LinkToLogin navigation={navigation} />
             </>
           )}
         </Formik>
