@@ -33,48 +33,10 @@ export default function FeedFooter({navigation, ...props}) {
           ) : null}
         </View>
       </View>
-      
     </View>
   );
 }
 
-const SavePostIcon = props => {
-  return (
-    <TouchableOpacity onPress={() => props.setOnClick(true)}>
-      <Ionicons
-        style={styles.iconsRight}
-        size={30}
-        name={props.onClick ? 'bookmark-sharp' : 'bookmark-outline'}
-      />
-    </TouchableOpacity>
-  );
-};
-const CommentIcon = props => {
-  return (
-    <TouchableOpacity onPress={() => console.log('navigate comment screen')}>
-      <Ionicons style={styles.iconsLeft} size={30} name="chatbubble-outline" />
-    </TouchableOpacity>
-  );
-};
-const LikeIcon = props => {
-  return (
-    <TouchableOpacity onPress={() => props.setOnClick(true)}>
-      <Ionicons
-        style={props.onClick ? styles.likeIcon_handle : styles.iconsLeft}
-        size={30}
-        name={props.onClick ? 'heart-sharp' : 'heart-outline'}
-      />
-    </TouchableOpacity>
-  );
-};
-
-const SharePostIcon = () => {
-  return (
-    <TouchableOpacity onPress={() => console.log('navigate share post')}>
-      <Ionicons style={styles.iconsLeft} size={30} name="paper-plane-outline" />
-    </TouchableOpacity>
-  );
-};
 const styles = StyleSheet.create({
   container: {
     width: '100%',
@@ -130,6 +92,43 @@ const styles = StyleSheet.create({
   },
 });
 
+const SavePostIcon = props => {
+  return (
+    <TouchableOpacity onPress={() => props.setOnClick(true)}>
+      <Ionicons
+        style={styles.iconsRight}
+        size={30}
+        name={props.onClick ? 'bookmark-sharp' : 'bookmark-outline'}
+      />
+    </TouchableOpacity>
+  );
+};
+const CommentIcon = props => {
+  return (
+    <TouchableOpacity onPress={() => console.log('navigate comment screen')}>
+      <Ionicons style={styles.iconsLeft} size={30} name="chatbubble-outline" />
+    </TouchableOpacity>
+  );
+};
+const LikeIcon = props => {
+  return (
+    <TouchableOpacity onPress={() => props.setOnClick(true)}>
+      <Ionicons
+        style={props.onClick ? styles.likeIcon_handle : styles.iconsLeft}
+        size={30}
+        name={props.onClick ? 'heart-sharp' : 'heart-outline'}
+      />
+    </TouchableOpacity>
+  );
+};
+
+const SharePostIcon = () => {
+  return (
+    <TouchableOpacity onPress={() => console.log('navigate share post')}>
+      <Ionicons style={styles.iconsLeft} size={30} name="paper-plane-outline" />
+    </TouchableOpacity>
+  );
+};
 // const Icon = [
 //   {
 //     name1: 'heart-outline',

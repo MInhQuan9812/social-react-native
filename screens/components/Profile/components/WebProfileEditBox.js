@@ -1,39 +1,37 @@
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import React from 'react';
-
-export default function LoginUser(props) {
+import {Divider} from '@rneui/themed';
+import { Dimensions } from 'react-native';
+const WIDTH = Dimensions.get('window').width;
+export default function WebProfileEditBox(props) {
   return (
     <View style={styles.wrapper}>
       <TextInput
-        placeholder="Số điện thoại, người dùng, email"
+        placeholder=""
+        defaultValue=""
         placeholderTextColor="black"
         autoCapitalize="none"
         keyboardType="email-address"
-        autoFocus={true}
+        autoFocus={false}
         textContentType="emailAddress"
         onChangeText={props.onChangeText}
         onBlur={props.onBlur}
         value={props.value}
         style={styles.textDecoration}
       />
-      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   wrapper: {
-    borderRadius: 3,
-    borderWidth: 0.15,
-    backgroundColor: '#F5F5F5',
-    marginTop:14,
-    padding: 3,
+    backgroundColor: 'white',
   },
   textDecoration: {
-    fontSize: 17,
-    fontFamily: 'Poppins-Regular',
-    fontWeight: '300',
-    color: 'black'
-  },
+    fontSize: 16,
+    fontWeight: '450',
+    color: 'black',
+    width:WIDTH-20-WIDTH*1/4,
 
+  },
 });

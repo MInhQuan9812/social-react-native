@@ -9,9 +9,10 @@ import axios from 'axios';
 
 export default function Home({navigation}) {
   const [feedData, setFeedData] = useState([]);
-      // Khi vô Home rồi lấy token dưới bộ nhớ máy đã lưu từ trước lên kèm vô Header
-    // `authTokenFromDevice()`
-    // Những màn hình khác tương tự Home
+
+  // Khi vô Home rồi lấy token dưới bộ nhớ máy đã lưu từ trước lên kèm vô Header
+  // `authTokenFromDevice()`
+  // Những màn hình khác tương tự Home
   const authTokenFromDevice = async () => {
     return await AsyncStorage.getItem('Instagram-AuthToken');
   };
@@ -36,11 +37,11 @@ export default function Home({navigation}) {
       });
   }, []);
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Header />
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.stories}>
           <Stories />
         </View>
@@ -52,7 +53,7 @@ export default function Home({navigation}) {
        <View>
         <BottomTabs navigation={navigation} />
       </View>  */}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    width: '100%',
+    // width: '100%',
   },
   header: {
     padding: 5,

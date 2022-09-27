@@ -35,8 +35,8 @@ export default function FeedBody(props) {
         horizontal
         showsHorizontalScrollIndicator={false}>
         {props.image.map((item, index) => (
-          <View style={styles.wrapper_Image}>
-            <Image key={index} style={styles.image} source={{uri: item.url}} />
+          <View key={index} style={styles.wrapper_Image}>
+            <Image  style={styles.image} source={{uri: item.url}} />
           </View>
         ))}
       </ScrollView>

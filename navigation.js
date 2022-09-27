@@ -11,6 +11,7 @@ import Search from './screens/Search';
 import Reel from './screens/Reel';
 import Notification from './screens/Notification';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import EditProfile from './screens/components/Profile/components/EditProfile'
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -54,6 +55,7 @@ export const SignedInStack = () => (
   <NavigationContainer>
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="BottomTabView" component={BottomTabView} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   </NavigationContainer>
 );
@@ -64,6 +66,8 @@ export const SignedOutStack = () => (
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="BottomTabView" component={BottomTabView} />
       <Stack.Screen name="Sign Up" component={SignUp} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+
     </Stack.Navigator>
   </NavigationContainer>
 );

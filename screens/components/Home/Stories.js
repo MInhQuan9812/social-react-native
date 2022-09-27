@@ -6,18 +6,75 @@ import {
   Image,
   FlatList,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {useState} from 'react';
+import {useEffect} from 'react';
+import axios from 'axios';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {TouchableOpacity} from 'react-native';
 
 export default function Stories() {
+  const [profileData, setProfileData] = useState([]);
+  const authTokenFromDevice = async () => {
+    return await AsyncStorage.getItem('Instagram-AuthToken');
+  };
+  const getProfileData = async () => {
+    return axios('https://www.pgonevn.com/api/account/Profile', {
+      headers: {
+        Authorization: `Bearer ${await authTokenFromDevice()}`,
+      },
+    });
+  };
+  useEffect(() => {
+    getProfileData()
+      .then(res => {
+        setProfileData(res.data.result);
+      })
+      .catch(function (error) {
+        console.log(
+          'There has been a problem with your operation: ' + error.message,
+        );
+        throw error;
+      });
+  }, []);
   return (
-    <FlatList
-      nestedScrollEnabled={false}
-      showsHorizontalScrollIndicator={false}
+    <ScrollView
+      nestedScrollEnabled={true}
       horizontal
-      data={USER}
-      renderItem={_renderItem}
-    />
+      showsHorizontalScrollIndicator={false}>
+      <TouchableOpacity style={styles.wrapper}>
+        <View style={styles.wrapper_Image}>
+          <Image
+            source={
+              profileData.avatar
+                ? {uri: profileData.avatar}
+                : require('../../../assets/Images/UserImage.png')
+            }
+            style={styles.image}
+          />
+        </View>
+        <View
+          style={styles.wrapper_Plus_Icon}>
+          <MaterialCommunityIcons
+            size={29}
+            name="plus-circle"
+            style={styles.plusIcon}
+          />
+        </View>
+
+        <Text style={styles.nickName}>{profileData.userName}</Text>
+      </TouchableOpacity>
+      <FlatList
+        nestedScrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        profileData={profileData}
+        data={USER}
+        renderItem={_renderItem}
+      />
+    </ScrollView>
   );
 }
 
@@ -35,10 +92,6 @@ const _renderItem = ({item}) => (
 );
 
 const USER = [
-  {
-    image: require('../../../assets/Images/UserImage.png'),
-    name: 'Tin của bạn',
-  },
   {
     image: require('../../../assets/Images/2.jpg'),
     name: 'nevskaya_95',
@@ -68,6 +121,20 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 4,
     backgroundColor: 'red',
+  },
+  wrapper_Plus_Icon:{
+    backgroundColor: 'white',
+    padding: 1,
+    borderRadius: 50,
+    position: 'absolute',
+    top: 58,
+    right: 12,
+  },
+  plusIcon: {
+    color: '#1A74E4',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapper: {
     margin: 3,

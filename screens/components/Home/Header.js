@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // backgroundColor:'yellow'
   },
   logo: {
     resizeMode: 'contain',
