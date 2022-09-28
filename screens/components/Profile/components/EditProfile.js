@@ -26,16 +26,12 @@ export default function EditProfile({route, navigation, ...props}) {
   const [changeUserName, setChangeUserName] = useState(null);
   const [changeBio, setChangeBio] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(null);
-  const [uploadAvatar, setUploadAvatar] = useState([]);
+  const [uploadAvatar, setUploadAvatar] = useState(null); //
 
   var bodyFormData = new FormData();
   bodyFormData.append('', {
-    type: uploadAvatar.mime,
-
-    uri: uploadAvatar.path,
+    uri: uploadAvatar,
   });
-
-  console.log(bodyFormData);
 
   const authTokenFromDevice = async () => {
     return await AsyncStorage.getItem('Instagram-AuthToken');
@@ -43,66 +39,70 @@ export default function EditProfile({route, navigation, ...props}) {
   const patchChangeInformation = async () => {
     //API
     try {
-      // const patchFullName = await axios.patch(
-      //   'https://www.pgonevn.com/api/account/Profile/UpdateFullname',
-      //   {fullname: changeFullName},
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${await authTokenFromDevice()}`,
+      if (changeFullName !== null) {
+        const patchFullName = await axios.patch(
+          'https://www.pgonevn.com/api/account/Profile/UpdateFullname',
+          {fullname: changeFullName},
+          {
+            headers: {
+              Authorization: `Bearer ${await authTokenFromDevice()}`,
+            },
+          },
+        );
+        const FullNameData = await patchFullName.data.result.fullname;
+      }
+      if (changeBio !== null) {
+        const patchBio = await axios.patch(
+          'https://www.pgonevn.com/api/account/Profile/UpdateBio',
+          {Bio: changeBio},
+          {
+            headers: {
+              Authorization: `Bearer ${await authTokenFromDevice()}`,
+            },
+          },
+        );
+        const BioData = await patchBio.data.result.bio;
+      }
+      // if (changeAvatar !== null) {
+      //   const patchAvatarData = await axios.patch(
+      //     'https://www.pgonevn.com/api/account/Profile/UpdateAvatar',
+      //     {Avatar: changeAvatar},
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${await authTokenFromDevice()}`,
+      //       },
       //     },
-      //   },
-      // );
-      // const patchBio = await axios.patch(
-      //   'https://www.pgonevn.com/api/account/Profile/UpdateBio',
-      //   {Bio: changeBio},
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${await authTokenFromDevice()}`,
-      //     },
-      //   },
-      // );
-      // const patchAvatarData = await axios.patch(
-      //   'https://www.pgonevn.com/api/account/Profile/UpdateAvatar',
-      //   {Avatar: changeAvatar},
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${await authTokenFromDevice()}`,
-      //     },
-      //   },
-      // );
-      // const postUploadAvatarData = await axios.post(
-      //   'https://www.pgonevn.com/clould/media/upload',
-      //   {
-      //     data: bodyFormData,
-      //   },
-      //   {
-      //     headers: {
-      //       Accept: 'application/json',
-      //       Authorization: `Bearer ${await authTokenFromDevice()}`,
-      //       'Content-Type': 'multipart/form-data',
-      //     },
-      //   },
-      // );
+      //   );
+      //   const AvatarData = await patchAvatarData.data.result.avatar;
+      // }
 
-      axios
-        .post('https://www.pgonevn.com/clould/media/upload', bodyFormData, {
+      const postUploadAvatarData = await axios.post(
+        'https://www.pgonevn.com/clould/media/upload',
+        bodyFormData,
+        {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data',
           },
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log('error from image :');
-          console.log(err);
-        });
+        },
+      );
+      const AvatartUploadData = await postUploadAvatarData.result.medias.url;
+      setChangeAvatar(AvatartUploadData);
 
-      // const FullNameData = await patchFullName.data.result.fullname;
-      // const BioData = await patchBio.data.result.bio;
-      // const AvatarData = await patchAvatarData.data.result.avatar;
-      // const AvatartUploadData = await postUploadAvatarData.result.medias.url;
+      // axios
+      //   .post('https://www.pgonevn.com/clould/media/upload', bodyFormData, {
+      //     headers: {
+      //       Accept: 'application/json',
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      //   .then(res => {
+      //     console.log(res);
+      //   })
+      //   .catch(err => {
+      //     console.log('error from image :');
+      //     console.log(err);
+      //   });
 
       // const AvatartUploadData1 = async () =>
       //   await postUploadAvatarData
@@ -112,17 +112,16 @@ export default function EditProfile({route, navigation, ...props}) {
       //     .catch(err => {
       //       console.log(err);
       //     });
-      // setChangeAvatar(AvatartUploadData);
       // console.log(FullNameData);
       // console.log(BioData);
       // console.log(AvatarData);
-      //Console.log(AvatartUploadData);
-
+      // Console.log(AvatartUploadData);
       //postUploadAvatarData1();
     } catch (error) {
       Alert.alert(error.message);
     }
   };
+
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
@@ -143,7 +142,7 @@ export default function EditProfile({route, navigation, ...props}) {
       compressImageQuality: 0.7,
     }).then(image => {
       console.log(image.path);
-      setUploadAvatar(image);
+      setUploadAvatar(image.path);
       this.bs.current.snapTo(1);
     });
   };
