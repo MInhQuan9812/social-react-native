@@ -26,7 +26,7 @@ export default function EditProfile({route, navigation, ...props}) {
   const [changeUserName, setChangeUserName] = useState(null);
   const [changeBio, setChangeBio] = useState(null);
   const [changeAvatar, setChangeAvatar] = useState(null);
-  const [uploadAvatar, setUploadAvatar] = useState(null); //
+  const [uploadAvatar, setUploadAvatar] = useState(null);
 
   var bodyFormData = new FormData();
   bodyFormData.append('', {
@@ -50,6 +50,7 @@ export default function EditProfile({route, navigation, ...props}) {
           },
         );
         const FullNameData = await patchFullName.data.result.fullname;
+        console.log(FullNameData);
       }
       if (changeBio !== null) {
         const patchBio = await axios.patch(
@@ -76,19 +77,18 @@ export default function EditProfile({route, navigation, ...props}) {
       //   const AvatarData = await patchAvatarData.data.result.avatar;
       // }
 
-      const postUploadAvatarData = await axios.post(
-        'https://www.pgonevn.com/clould/media/upload',
-        bodyFormData,
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
-      const AvatartUploadData = await postUploadAvatarData.result.medias.url;
-      setChangeAvatar(AvatartUploadData);
-
+      // const postUploadAvatarData = await axios.post(
+      //   'https://www.pgonevn.com/clould/media/upload',
+      //   bodyFormData,
+      //   {
+      //     headers: {
+      //       Accept: 'application/json',
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   },
+      // );
+      // const AvatartUploadData = await postUploadAvatarData.result.medias.url;
+      // setChangeAvatar(AvatartUploadData);
       // axios
       //   .post('https://www.pgonevn.com/clould/media/upload', bodyFormData, {
       //     headers: {
@@ -245,7 +245,6 @@ export default function EditProfile({route, navigation, ...props}) {
           </View>
           <Divider width={1} orientation="vertical" />
         </View>
-        {/* Header */}
 
         {/* Body */}
         <View style={styles.wrapper_Body}>
@@ -263,7 +262,6 @@ export default function EditProfile({route, navigation, ...props}) {
             </Text>
           </TouchableOpacity>
         </View>
-        {/* Body */}
 
         {/* Footer */}
         <View style={styles.wrapper_Footer}>
@@ -350,7 +348,6 @@ export default function EditProfile({route, navigation, ...props}) {
 
           <Divider width={1} orientation="vertical" style={{marginTop: 7}} />
         </View>
-        {/* Footer */}
       </Animated.View>
     </SafeAreaView>
   );
